@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>签售CUT · Juineii（xhs/vx同名）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 1.5rem 1.5rem 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+        }
+
+        .header-with-lang {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.01em;
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            padding: 0.35rem 0.7rem;
+            border-radius: 60px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #475569;
+            letter-spacing: 0.3px;
+        }
+        .lang-btn.active {
+            background: #1e4a7a;
+            color: white;
+            box-shadow: 0 2px 8px rgba(30,74,122,0.2);
+        }
+        .lang-btn:not(.active):hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .info-note {
+            background: #f8fafc;
+            border-left: 4px solid #94a3b8;
+            border-radius: 0.8rem;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1.8rem;
+            font-size: 0.85rem;
+            color: #334155;
+            line-height: 1.5;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .info-note p {
+            margin: 0;
+        }
+        .info-note strong {
+            color: #1e4a7a;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.2rem;
+            box-shadow: 0 8px 20px -6px rgba(0, 32, 64, 0.08);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            color: #64748b;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .threshold-label-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .label-text {
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .usage-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 32px;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1e4a7a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            background-color: #f8fafc;
+            line-height: 1;
+            padding: 0;
+            margin-left: 0.5rem;
+            flex-shrink: 0;
+        }
+        .usage-btn:hover {
+            background-color: #e2e8f0;
+            border-color: #94a3b8;
+            transform: scale(0.96);
+            color: #0f2b44;
+        }
+        .usage-btn:active {
+            transform: scale(0.94);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0f172a;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-value input {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0f172a;
+            border: none;
+            background: #f1f5f9;
+            padding: 0.2rem 0.8rem;
+            width: 130px;
+            border-radius: 1rem;
+            outline: 2px solid transparent;
+            transition: outline 0.15s, background 0.15s;
+            font-family: inherit;
+        }
+
+        .stat-value input:focus {
+            outline: 2px solid #94a3b8;
+            background: #ffffff;
+        }
+
+        .readonly-value {
+            background: #f1f5f9;
+            padding: 0.2rem 1.2rem;
+            border-radius: 1rem;
+            color: #1e293b;
+            font-size: 1.8rem;
+            min-width: 80px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .cut-value {
+            background: #e6f0ff;
+            color: #1e4a7a;
+            font-weight: 700;
+        }
+
+        .total-value {
+            background: #f0f3f8;
+            color: #0b3b5c;
+            font-weight: 600;
+        }
+
+        .hint {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+            border-top: 1px dashed #e2e8f0;
+            padding-top: 0.4rem;
+        }
+
+        .table-section {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 26px -8px rgba(0, 34, 68, 0.1);
+            border: 1px solid #e9eef3;
+        }
+
+        .table-header {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 1.2rem;
+            gap: 0.8rem;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .table-header h2 {
+            font-size: 1.3rem;
+            font-weight: 550;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .table-header h2 span {
+            background: #e9eef3;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .update-badge {
+            background: #dbeafe;
+            color: #1e4b8b;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 2px 6px rgba(0,69,145,0.06);
+            white-space: nowrap;
+        }
+
+        .sort-radio-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            background: #f0f5fa;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid #dde3ea;
+            width: fit-content;
+        }
+
+        .sort-radio-container label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sort-radio-container input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #94a3b8;
+            border-radius: 50%;
+            margin: 0;
+            background: white;
+            transition: 0.1s;
+            cursor: pointer;
+        }
+        .sort-radio-container input[type="radio"]:checked {
+            border: 5px solid #1e4a7a;
+            background: white;
+        }
+        .sort-radio-container input[type="radio"]:focus-visible {
+            outline: 2px solid #1e4a7a;
+            outline-offset: 2px;
+        }
+
+        .table-wrapper {
+            border-radius: 1.2rem;
+            border: 1px solid #ecf1f7;
+            background: #fafdff;
+            max-height: 400px;
+            overflow-y: auto;
+            /* 桌面端保留横向滚动，但移动端会覆盖 */
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 基础表格样式：桌面端自动列宽，移动端通过媒体查询覆盖 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.65rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.9rem 1rem;
+            background: #f8fafd;
+            color: #334155;
+            font-weight: 600;
+            font-size: 0.65rem;
+            letter-spacing: 0.02em;
+            border-bottom: 1px solid #dde3ea;
+            position: sticky;
+            top: 0;
+            background-color: #f8fafd;
+            z-index: 10;
+        }
+
+        td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #eef2f6;
+            color: #1f2a41;
+            font-size: 0.65rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover td {
+            background-color: #f0f7ff;
+            transition: background 0.15s;
+        }
+
+        .seq-number {
+            font-weight: 550;
+            color: #2c4e6e;
+            background: #f1f6fc;
+            display: inline-block;
+            text-align: center;
+            width: 24px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            line-height: 1.4;
+        }
+
+        .sales-positive {
+            color: #2b6e4f;
+            font-weight: 550;
+            background: #e3f2ed;
+            padding: 0.1rem 0.5rem;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.65rem;
+        }
+
+        .sales-negative {
+            color: #b13e4b;
+            font-weight: 550;
+            background: #ffe9eb;
+            padding: 0.1rem 0.5rem;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.65rem;
+        }
+
+        /* 来源列桌面端滑动（max-width约束） */
+        .table-wrapper td:nth-child(3) {
+            overflow-x: auto;
+            white-space: nowrap;
+            max-width: 280px;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+            cursor: grab;
+        }
+        .table-wrapper td:nth-child(3):active {
+            cursor: grabbing;
+        }
+        .table-wrapper th:nth-child(3) {
+            white-space: normal;
+        }
+        .table-wrapper td:nth-child(1),
+        .table-wrapper td:nth-child(2),
+        .table-wrapper td:nth-child(4) {
+            white-space: nowrap;
+        }
+
+        .empty-row td {
+            padding: 2rem;
+            text-align: center;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .footer-note {
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #86b9eb;
+            border-radius: 10px;
+            display: inline-block;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        /* 模态框样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(3px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.2s, opacity 0.2s ease;
+        }
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-container {
+            background: #ffffff;
+            max-width: 480px;
+            width: 90%;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3);
+            overflow: hidden;
+            transform: scale(0.96);
+            transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #eef2f6;
+            background: #fafdff;
+        }
+        .modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: color 0.15s;
+            padding: 0 0.25rem;
+        }
+        .modal-close:hover {
+            color: #1e4a7a;
+        }
+        .modal-body {
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #1e2f44;
+            background: white;
+        }
+        .modal-body p {
+            margin-bottom: 0.8rem;
+        }
+        .modal-body .example-text {
+            background: #f1f5f9;
+            padding: 0.6rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            color: #0f3b5e;
+            margin-top: 0.5rem;
+            border-left: 3px solid #1e4a7a;
+        }
+        .modal-footer {
+            padding: 0.8rem 1.5rem 1.2rem;
+            display: flex;
+            justify-content: flex-end;
+            background: #ffffff;
+            border-top: 1px solid #eef2f6;
+        }
+        .modal-btn {
+            background: #1e4a7a;
+            border: none;
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .modal-btn:hover {
+            background: #0f3557;
+        }
+
+        /* ========= 移动端专用样式 (宽度 ≤ 640px) ========= */
+        @media screen and (max-width: 640px) {
+            .dashboard {
+                padding: 1rem;
+                border-radius: 1.5rem;
+            }
+            .dashboard,
+            .stat-card,
+            .lang-switcher {
+                backdrop-filter: none !important;
+                background: #ffffff;
+            }
+            .dashboard {
+                background: #f4f7fb;
+            }
+            .header-with-lang {
+                flex-direction: column-reverse;
+                align-items: stretch;
+                gap: 0.6rem;
+                margin-bottom: 0.25rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0;
+                width: 100%;
+                text-align: left;
+            }
+            .lang-switcher {
+                align-self: flex-end;
+                margin-top: 0;
+                margin-bottom: 0;
+                padding: 0.25rem 0.6rem;
+            }
+            .lang-btn {
+                font-size: 0.85rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .info-note {
+                padding: 0.6rem 1rem;
+                margin-bottom: 1.2rem;
+                font-size: 0.78rem;
+                border: 2px dashed #b0c4de;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+                margin-bottom: 1.2rem;
+            }
+            .stat-card:nth-child(1) { order: 2; }
+            .stat-card:nth-child(2) { order: 1; }
+            .stat-card:nth-child(3) { order: 3; }
+            .stat-card:nth-child(4) { order: 0; }
+            .stat-card {
+                padding: 0.9rem 1rem;
+            }
+            .stat-value {
+                font-size: 1.5rem;
+            }
+            .stat-value input {
+                font-size: 1.4rem;
+                width: 90px;
+                padding: 0.2rem 0.6rem;
+            }
+            .readonly-value {
+                font-size: 1.4rem;
+                padding: 0.2rem 0.8rem;
+                min-width: 70px;
+            }
+            .hint {
+                font-size: 0.65rem;
+                margin-top: 0.3rem;
+                padding-top: 0.2rem;
+            }
+            .usage-btn {
+                width: 26px;
+                height: 26px;
+                font-size: 0.8rem;
+            }
+            .table-section {
+                padding: 0.8rem;
+            }
+            .table-header {
+                gap: 0.5rem;
+                margin-bottom: 0.8rem;
+            }
+            .header-row h2 {
+                font-size: 1rem;
+            }
+            .header-row h2 span {
+                font-size: 0.7rem;
+                padding: 0.1rem 0.5rem;
+            }
+            .update-badge {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.6rem;
+                gap: 0.2rem;
+            }
+            .sort-radio-container {
+                width: 100%;
+                justify-content: space-between;
+                padding: 0.4rem 0.8rem;
+                gap: 0.5rem;
+            }
+            .sort-radio-container label {
+                font-size: 0.75rem;
+                gap: 4px;
+            }
+            .sort-radio-container input[type="radio"] {
+                width: 14px;
+                height: 14px;
+            }
+
+            /* 移动端：表格采用固定布局，列宽比例，禁止整体横向滚动，仅单元格内滚动 */
+            .table-wrapper {
+                overflow-x: visible;    /* 禁止整体横向滚动条 */
+                max-height: 350px;
+                border-radius: 1rem;
+            }
+            table {
+                table-layout: fixed;    /* 固定布局，列宽由百分比决定 */
+                width: 100%;
+                font-size: 0.65rem;
+            }
+            /* 列宽比例：序号12% 时间33% 来源40% 单笔15%，保证序号和单笔始终可见 */
+            th:nth-child(1), td:nth-child(1) { width: 15%; }  /* 序号 */
+            th:nth-child(2), td:nth-child(2) { width: 40%; }  /* 时间 */
+            th:nth-child(3), td:nth-child(3) { width: 27%; }  /* 来源（支持内部滚动） */
+            th:nth-child(4), td:nth-child(4) { width: 18%; }  /* 单笔 */
+
+            th {
+                font-size: 0.65rem;
+                padding: 0.5rem 0.3rem;
+            }
+            td {
+                font-size: 0.65rem;
+                padding: 0.5rem 0.3rem;
+                white-space: normal;    /* 允许换行，但来源列会强制nowrap+滚动 */
+            }
+            /* 移动端：来源列强制不换行 + 内部滚动，覆盖可能的white-space */
+            .table-wrapper td:nth-child(3) {
+                white-space: nowrap;
+                overflow-x: auto;
+                max-width: none;         /* 由列宽40%控制，超出则滚动 */
+                scrollbar-width: thin;
+                -webkit-overflow-scrolling: touch;
+            }
+            /* 其他列不允许换行，保持紧凑 */
+            .table-wrapper td:nth-child(1),
+            .table-wrapper td:nth-child(2),
+            .table-wrapper td:nth-child(4) {
+                white-space: nowrap;
+                overflow-x: visible;
+            }
+            /* 序号列内部样式微调 */
+            .seq-number {
+                font-size: 0.6rem;
+                width: 20px;
+            }
+            .sales-positive, .sales-negative {
+                padding: 0.1rem 0.3rem;
+                font-size: 0.6rem;
+                border-radius: 20px;
+            }
+            .footer-note {
+                font-size: 0.6rem;
+                margin-top: 0.5rem;
+                justify-content: space-between;
+            }
+            .modal-body {
+                padding: 1rem;
+                font-size: 0.88rem;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .stat-value input {
+                width: 80px;
+            }
+            /* 对于极小屏幕，略微调整列宽比例，让单笔更明显 */
+            th:nth-child(1), td:nth-child(1) { width: 14%; }
+            th:nth-child(2), td:nth-child(2) { width: 31%; }
+            th:nth-child(3), td:nth-child(3) { width: 38%; }
+            th:nth-child(4), td:nth-child(4) { width: 17%; }
+            .lang-switcher {
+                padding: 0.2rem 0.5rem;
+            }
+            .lang-btn {
+                font-size: 0.8rem;
+                padding: 0.15rem 0.5rem;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header-with-lang">
+            <h1 id="pageTitle">加载中......</h1>
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="ko">한국어</button>
+            </div>
+        </div>
+
+        <div class="info-note" id="infoNote">
+            <p>最后5-10分钟请监控销量变化补单，推荐本数根据数据来源内的所有数据计算，为中签中位数本数，仅作参考，不提供擦线本数；若名额人数有问题、数据长时间没更新，请及时联系我们（<strong>vx：nsxnso</strong>）。</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label" id="statLabelThresholdContainer">
+                    <div class="threshold-label-wrapper">
+                        <span class="label-text" id="thresholdLabelText">💧 注水阈值</span>
+                        <button class="usage-btn" id="usageMethodBtn" aria-label="使用方法">?</button>
+                    </div>
+                </div>
+                <div class="stat-value">
+                    <input type="number" id="thresholdInput" min="1" value="0" step="1" aria-label="注水阈值">
+                </div>
+                <div class="hint" id="hintThreshold">输入正整数，高于该值的单笔销量不计入推荐cut计算</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label" id="statLabelQuota">👥 名额人数</div>
+                <div class="stat-value">
+                    <span class="readonly-value" id="quotaDisplay">0</span>
+                </div>
+                <div class="hint" id="hintQuota">本场活动名额总人数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label" id="statLabelCut">📐 推荐 cut</div>
+                <div class="stat-value">
+                    <span class="readonly-value cut-value" id="cutDisplay">—</span>
+                </div>
+                <div class="hint" id="hintCut">推荐数量，仅供参考</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label" id="statLabelTotal">📊 总销量</div>
+                <div class="stat-value">
+                    <span class="readonly-value total-value" id="totalSalesDisplay">0</span>
+                </div>
+                <div class="hint" id="hintTotal">本场活动的总销售量</div>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <div class="table-header">
+                <div class="header-row">
+                    <h2>
+                        <span id="tableTitlePrefix">📋 销量变化实时记录</span>
+                        <span id="rowCountBadge">0 条</span>
+                    </h2>
+                    <div class="update-badge">
+                        <span class="dot"></span>
+                        <span id="lastUpdate">更新于 等待数据…</span>
+                    </div>
+                </div>
+                <div class="sort-radio-container">
+                    <label>
+                        <input type="radio" name="sortOrder" value="timeDesc" checked>
+                        <span id="sortTimeDescLabel">时间倒序</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="sortOrder" value="salesDesc">
+                        <span id="sortSalesDescLabel">销量降序</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="thSeq">#</th>
+                            <th id="thTime">时间</th>
+                            <th id="thSource">来源</th>
+                            <th id="thUnit">单笔</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr class="empty-row"><td colspan="4">⏳ 加载 CSV 数据中…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer-note">
+                <span id="footerRefreshHint">数据未更新可刷新网页</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 使用方法弹窗 -->
+    <div id="usageModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle">使用方法</h3>
+                <button class="modal-close" id="closeModalBtn" aria-label="关闭">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent"></div>
+            <div class="modal-footer">
+                <button class="modal-btn" id="modalConfirmBtn">知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================= 活动配置参数 =================
+        const ACTIVITY_CONFIG = {
+            pageTitle: 'RYO影通 4.26 16:59截止',
+            csvUrl: 'RYO影通.csv',
+            fixedQuota: 30,
+            refreshInterval: 25000,
+            defaultThreshold: 0
+        };
+
+        // ================= 多语言资源 =================
+        const LOCALES = {
+            zh: {
+                thSeq: "#",
+                statLabelThreshold: "💧 注水阈值",
+                hintThreshold: "输入正整数，高于该值的单笔销量不计入推荐cut计算",
+                statLabelQuota: "👥 名额人数",
+                hintQuota: "本场活动名额总人数",
+                statLabelCut: "📐 推荐 cut",
+                hintCut: "推荐数量，仅供参考",
+                statLabelTotal: "📊 总销量",
+                hintTotal: "本场活动的总销售量",
+                tableTitlePrefix: "📋 销量变化实时记录",
+                thTime: "时间",
+                thSource: "来源",
+                thUnit: "单笔",
+                sortTimeDesc: "时间倒序",
+                sortSalesDesc: "销量降序",
+                infoNoteHtml: "最后5-10分钟请监控销量变化补单，推荐本数根据数据来源内的所有数据计算，为中签中位数本数，仅作参考，不提供擦线本数；若名额人数有问题、数据长时间没更新，请及时联系我们（<strong>vx：nsxnso</strong>）。",
+                updatePrefix: "更新于",
+                footerRefreshHint: "数据未更新可刷新网页",
+                loadingText: "⏳ 加载 CSV 数据中…",
+                emptyText: "📭 暂无销量记录，请确认CSV文件存在且非空",
+                errorPrefix: "❌ 读取CSV失败: ",
+                rowsCount: (count) => `${count} 条`,
+                usageMessage: "在注水阈值处输入正整数，高于这个数值的订单和相应退单会被剔除在外从而计算推荐cut，这个数值一般填你买的这个活动按往期经验来看真人会下的最多的本数，填写数值不同，则推荐cut也不同。（例：某活动观礼最多会有人下20本，超过20本的疑似为平台注水，则在注水阈值处填写20）",
+                modalTitle: "使用方法"
+            },
+            en: {
+                thSeq: "#",
+                statLabelThreshold: "💧 Watermark Threshold",
+                hintThreshold: "Please enter a positive integer. Single transaction quantities (Qty) exceeding this value will be excluded from the recommended cut calculation.",
+                statLabelQuota: "👥 Quota",
+                hintQuota: "Total slots for this event",
+                statLabelCut: "📐 Recommended Cut",
+                hintCut: "Reference only",
+                statLabelTotal: "📊 Total Sales",
+                hintTotal: "Total sales volume",
+                tableTitlePrefix: "📋 Real-time Sales Log",
+                thTime: "Time",
+                thSource: "Source",
+                thUnit: "Qty",
+                sortTimeDesc: "Reverse Chronological",
+                sortSalesDesc: "Sales Descending",
+                infoNoteHtml: "In the final 5–10 minutes, monitor sales to fill orders. The recommended quantity—the median from all data—is for reference only; minimum thresholds are not provided. If quota issues arise or data is outdated, contact us promptly (<strong>WeChat：nsxnso</strong>).",
+                updatePrefix: "Updated at",
+                footerRefreshHint: "Refresh page if no update",
+                loadingText: "⏳ Loading CSV data…",
+                emptyText: "📭 No sales records. Please confirm CSV file exists and is not empty.",
+                errorPrefix: "❌ Failed to load CSV: ",
+                rowsCount: (count) => `${count} entries`,
+                usageMessage: "Enter a positive integer in the Watermark Threshold field. Orders and corresponding cancellations with quantity above this value will be excluded when calculating the recommended cut. This value typically reflects the maximum number of copies a real participant would purchase based on past event experience. Adjusting this value changes the recommended cut. (Example: In a past event, the maximum legitimate purchase per participant was 20 copies; orders exceeding 20 are considered potential platform inflation. In that case, enter 20 as the threshold.)",
+                modalTitle: "How to Use"
+            },
+            ko: {
+                thSeq: "번호",
+                statLabelThreshold: "💧 허위 거래로 간주하는 임계값",
+                hintThreshold: "정수(양의 정수)를 입력해 주세요. 해당 값을 초과하는 단일 거래량은 추천 컷(cut) 계산에서 제외됩니다.",
+                statLabelQuota: "👥 정원 수",
+                hintQuota: "이번 행사 총 정원 수",
+                statLabelCut: "📐 추천 수량",
+                hintCut: "참고용입니다",
+                statLabelTotal: "📊 총 판매량",
+                hintTotal: "총 판매량",
+                tableTitlePrefix: "📋 실시간 판매 기록",
+                thTime: "시간",
+                thSource: "출처",
+                thUnit: "수량",
+                sortTimeDesc: "시간 역순",
+                sortSalesDesc: "판매량 내림차순",
+                infoNoteHtml: "마지막 5~10분 동안 판매 추이를 확인하며 보충 주문해 주세요. 추천 수량은 데이터 내 모든 정보를 바탕으로 산출된 당첨 중간값으로, 참고용이며 최소 당첨 수량은 제공하지 않습니다. 정원 관련 문제가 있거나 데이터가 오래된 경우, 빠르게 연락해 주세요 (<strong>WeChat：nsxnso</strong>).",
+                updatePrefix: "업데이트 시간",
+                footerRefreshHint: "업데이트되지 않으면 페이지 새로고침",
+                loadingText: "⏳ CSV 데이터 로딩 중…",
+                emptyText: "📭 판매 기록이 없습니다. CSV 파일이 존재하는지 확인하세요.",
+                errorPrefix: "❌ CSV 로드 실패: ",
+                rowsCount: (count) => `${count}개 항목`,
+                usageMessage: "임계값 입력란에 양의 정수를 입력하세요. 이 값을 초과하는 주문 및 해당 취소는 추천 컷(cut) 계산에서 제외됩니다. 일반적으로 과거 경험을 바탕으로 실제 참가자가 구매할 수 있는 최대 수량을 입력합니다. 값을 변경하면 추천 컷이 달라집니다. (예: 특정 행사에서 실제 구매자가 최대 20부를 구매하고, 20부를 초과하는 경우 플랫폼 물량으로 간주된다면 임계값에 20을 입력하세요.)",
+                modalTitle: "사용 방법"
+            }
+        };
+
+        // DOM 元素
+        const thresholdInput = document.getElementById('thresholdInput');
+        const quotaDisplay = document.getElementById('quotaDisplay');
+        const cutDisplay = document.getElementById('cutDisplay');
+        const totalSalesDisplay = document.getElementById('totalSalesDisplay');
+        const tableBody = document.getElementById('tableBody');
+        const lastUpdateSpan = document.getElementById('lastUpdate');
+        const rowCountBadge = document.getElementById('rowCountBadge');
+        const pageTitleEl = document.getElementById('pageTitle');
+        const radioTimeDesc = document.querySelector('input[name="sortOrder"][value="timeDesc"]');
+        const radioSalesDesc = document.querySelector('input[name="sortOrder"][value="salesDesc"]');
+        const thresholdLabelSpan = document.getElementById('thresholdLabelText');
+        const hintThresholdSpan = document.getElementById('hintThreshold');
+        const usageBtn = document.getElementById('usageMethodBtn');
+        const modalOverlay = document.getElementById('usageModal');
+        const modalBodyDiv = document.getElementById('modalBodyContent');
+        const modalTitleEl = document.getElementById('modalTitle');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+
+        let currentLang = 'zh';
+        let originalData = [];
+        let sortMode = 'timeDesc';
+        let lastError = null;
+        let lastSuccessTimeStr = null;
+        let currentThreshold = ACTIVITY_CONFIG.defaultThreshold;
+        let previousDataHash = '';
+        let isUpdating = false;
+
+        quotaDisplay.textContent = ACTIVITY_CONFIG.fixedQuota;
+        pageTitleEl.innerText = ACTIVITY_CONFIG.pageTitle;
+        thresholdInput.value = ACTIVITY_CONFIG.defaultThreshold;
+        currentThreshold = ACTIVITY_CONFIG.defaultThreshold;
+
+        function t(key, dynamicParam = null) {
+            let value = LOCALES[currentLang][key];
+            if (typeof value === 'function') return value(dynamicParam);
+            return value;
+        }
+
+        function updateStaticTexts() {
+            document.getElementById('thSeq').innerHTML = t('thSeq');
+            document.getElementById('thTime').innerHTML = t('thTime');
+            document.getElementById('thSource').innerHTML = t('thSource');
+            document.getElementById('thUnit').innerHTML = t('thUnit');
+            thresholdLabelSpan.innerHTML = t('statLabelThreshold');
+            hintThresholdSpan.innerHTML = t('hintThreshold');
+            document.getElementById('statLabelQuota').innerHTML = t('statLabelQuota');
+            document.getElementById('hintQuota').innerHTML = t('hintQuota');
+            document.getElementById('statLabelCut').innerHTML = t('statLabelCut');
+            document.getElementById('hintCut').innerHTML = t('hintCut');
+            document.getElementById('statLabelTotal').innerHTML = t('statLabelTotal');
+            document.getElementById('hintTotal').innerHTML = t('hintTotal');
+            document.getElementById('tableTitlePrefix').innerHTML = t('tableTitlePrefix');
+            document.getElementById('sortTimeDescLabel').innerHTML = t('sortTimeDesc');
+            document.getElementById('sortSalesDescLabel').innerHTML = t('sortSalesDesc');
+            document.getElementById('footerRefreshHint').innerHTML = t('footerRefreshHint');
+            const infoNoteDiv = document.getElementById('infoNote');
+            infoNoteDiv.innerHTML = `<p>${t('infoNoteHtml')}</p>`;
+            updateLastUpdateText();
+        }
+
+        function updateLastUpdateText() {
+            if (lastSuccessTimeStr) lastUpdateSpan.textContent = `${t('updatePrefix')} ${lastSuccessTimeStr}`;
+            else if (lastError) lastUpdateSpan.textContent = `${t('updatePrefix')} ${t('errorPrefix')}${lastError}`;
+            else lastUpdateSpan.textContent = `${t('updatePrefix')} ${t('loadingText')}`;
+        }
+
+        function getDisplayData() {
+            if (!originalData.length) return [];
+            if (sortMode === 'timeDesc') return [...originalData].reverse();
+            else return [...originalData].sort((a, b) => b.saleValue - a.saleValue);
+        }
+
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+
+        function renderTableByState() {
+            if (lastError) { tableBody.innerHTML = `<tr class="empty-row"><td colspan="4">${t('errorPrefix')}${lastError}</td></tr>`; rowCountBadge.textContent = t('rowsCount', 0); return; }
+            if (!originalData.length) { tableBody.innerHTML = `<tr class="empty-row"><td colspan="4">${t('emptyText')}</td></tr>`; rowCountBadge.textContent = t('rowsCount', 0); return; }
+            const displayData = getDisplayData();
+            let html = '';
+            displayData.forEach((row, idx) => {
+                const saleClass = row.saleValue >= 0 ? 'sales-positive' : 'sales-negative';
+                const sign = row.saleValue > 0 ? '+' : '';
+                html += `<tr>
+                            <td style="text-align:center;"><span class="seq-number">${idx+1}</span></td>
+                            <td>${escapeHtml(row.time)}</td>
+                            <td>${escapeHtml(row.product)}</td>
+                            <td><span class="${saleClass}">${sign}${row.saleValue}</span></td>
+                          </tr>`;
+            });
+            tableBody.innerHTML = html;
+            rowCountBadge.textContent = t('rowsCount', displayData.length);
+        }
+
+        function computeRecommendedCut(data, threshold, quota) {
+            if (!data.length || quota === 0) return '—';
+            const filtered = data.filter(item => Math.abs(item.saleValue) <= threshold);
+            if (filtered.length === 0) return '0.00';
+            const sum = filtered.reduce((acc, cur) => acc + cur.saleValue, 0);
+            return (sum / quota).toFixed(2);
+        }
+
+        function computeTotalSales(data) { return data.reduce((acc, cur) => acc + cur.saleValue, 0); }
+
+        function updateStatsAndBadge() {
+            if (lastError || !originalData.length) { cutDisplay.textContent = '—'; totalSalesDisplay.textContent = '0'; return; }
+            cutDisplay.textContent = computeRecommendedCut(originalData, currentThreshold, ACTIVITY_CONFIG.fixedQuota);
+            totalSalesDisplay.textContent = computeTotalSales(originalData);
+        }
+
+        function refreshDataDependentUI() { renderTableByState(); updateStatsAndBadge(); }
+
+        function parseCSV(text) {
+            let cleaned = text.replace(/^\uFEFF/, '');
+            const lines = cleaned.split(/\r?\n/).filter(line => line.trim() !== '');
+            if (lines.length === 0) return [];
+            const dataRows = lines.slice(1);
+            const result = [];
+            for (const row of dataRows) {
+                const cols = row.split(',');
+                if (cols.length < 4) continue;
+                const time = cols[0].trim();
+                const product = cols[1].trim();
+                const saleRaw = cols[3].trim();
+                const saleValue = parseInt(saleRaw, 10);
+                if (isNaN(saleValue)) continue;
+                result.push({ time, product, saleValue });
+            }
+            return result;
+        }
+
+        async function fetchAndUpdate() {
+            if (isUpdating) return;
+            isUpdating = true;
+            try {
+                const urlWithCache = `${ACTIVITY_CONFIG.csvUrl}?t=${Date.now()}`;
+                const response = await fetch(urlWithCache, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const csvText = await response.text();
+                const newData = parseCSV(csvText);
+                const newHash = JSON.stringify(newData);
+                if (newHash !== previousDataHash) {
+                    originalData = newData;
+                    previousDataHash = newHash;
+                    lastError = null;
+                    const now = new Date();
+                    lastSuccessTimeStr = now.toLocaleTimeString();
+                    updateLastUpdateText();
+                    refreshDataDependentUI();
+                } else {
+                    if (originalData.length) { const now = new Date(); lastSuccessTimeStr = now.toLocaleTimeString(); updateLastUpdateText(); }
+                    if (lastError) { lastError = null; refreshDataDependentUI(); }
+                }
+            } catch (error) {
+                lastError = error.message;
+                originalData = []; previousDataHash = ''; lastSuccessTimeStr = null;
+                updateLastUpdateText();
+                refreshDataDependentUI();
+            } finally { isUpdating = false; }
+        }
+
+        function startAutoRefresh() { setTimeout(async function tick() { await fetchAndUpdate(); startAutoRefresh(); }, ACTIVITY_CONFIG.refreshInterval); }
+
+        thresholdInput.addEventListener('input', function(e) {
+            let val = parseInt(e.target.value, 10);
+            if (isNaN(val) || val < 1) val = 1;
+            currentThreshold = val;
+            thresholdInput.value = val;
+            if (!lastError && originalData.length > 0) cutDisplay.textContent = computeRecommendedCut(originalData, currentThreshold, ACTIVITY_CONFIG.fixedQuota);
+            else cutDisplay.textContent = '—';
+        });
+        thresholdInput.addEventListener('blur', function() {
+            let val = parseInt(this.value, 10);
+            if (isNaN(val) || val < 1) this.value = 1;
+            currentThreshold = parseInt(this.value,10);
+            if (!lastError && originalData.length > 0) cutDisplay.textContent = computeRecommendedCut(originalData, currentThreshold, ACTIVITY_CONFIG.fixedQuota);
+        });
+
+        function handleSortChange() { sortMode = radioTimeDesc.checked ? 'timeDesc' : 'salesDesc'; renderTableByState(); }
+        radioTimeDesc.addEventListener('change', handleSortChange);
+        radioSalesDesc.addEventListener('change', handleSortChange);
+        radioTimeDesc.checked = true; sortMode = 'timeDesc';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => { if (btn.getAttribute('data-lang') === lang) btn.classList.add('active'); else btn.classList.remove('active'); });
+            updateStaticTexts();
+            refreshDataDependentUI();
+            updateLastUpdateText();
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', (e) => { const lang = btn.getAttribute('data-lang'); if (lang) setLanguage(lang); }));
+
+        function openModal() { modalTitleEl.textContent = t('modalTitle'); modalBodyDiv.innerHTML = `<p>${t('usageMessage').replace(/\n/g, '<br>')}</p>`; modalOverlay.classList.add('active'); }
+        function closeModal() { modalOverlay.classList.remove('active'); }
+        usageBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        modalConfirmBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal(); });
+
+        fetchAndUpdate();
+        startAutoRefresh();
+        updateStaticTexts();
+    </script>
+</body>
+</html>
